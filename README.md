@@ -113,7 +113,10 @@ dotnet build FsApi.sln
 dotnet test FsApi.sln
 
 # API サーバー起動（http://localhost:5000）
-dotnet run --project src/FsApi.Api/FsApi.Api.fsproj
+dotnet run --project src/FsApi.Api
+
+# 開発時はwatchモード推奨（コード変更で自動再起動）
+dotnet watch --project src/FsApi.Api
 
 # API ドキュメント（Scalar UI）
 # http://localhost:5000/scalar/v1 で閲覧可能
@@ -123,10 +126,10 @@ dotnet run --project src/FsApi.Api/FsApi.Api.fsproj
 
 ```bash
 # Todo 一覧表示
-dotnet run --project src/FsApi.Batch/FsApi.Batch.fsproj -- list
+dotnet run --project src/FsApi.Batch -- list
 
 # 全 Todo を完了にする
-dotnet run --project src/FsApi.Batch/FsApi.Batch.fsproj -- complete-all
+dotnet run --project src/FsApi.Batch -- complete-all
 ```
 
 ## API エンドポイント
