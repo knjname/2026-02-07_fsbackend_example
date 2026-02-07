@@ -13,7 +13,8 @@ module Database =
                     rb
                         .AddPostgres()
                         .WithGlobalConnectionString(connectionString)
-                        .ScanIn(typeof<Migrations.CreateTodosTable>.Assembly).For.Migrations()
+                        .ScanIn(typeof<Migrations.CreateTodosTable>.Assembly)
+                        .For.Migrations()
                     |> ignore)
                 .AddLogging(fun lb -> lb.AddFluentMigratorConsole() |> ignore)
                 .BuildServiceProvider(false)
