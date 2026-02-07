@@ -1,7 +1,8 @@
-module FsApi.Domain.Tests.TodoTests
+module FsApi.Todo.Tests.TodoTests
 
 open Expecto
-open FsApi.Domain
+open FsApi.SharedKernel
+open FsApi.Todo.Domain
 
 [<Tests>]
 let validateTitleTests =

@@ -1,4 +1,4 @@
-module FsApi.UseCase.Tests.Program
+module FsApi.Todo.Tests.Program
 
 open Expecto
 

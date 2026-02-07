@@ -1,7 +1,7 @@
-namespace FsApi.UseCase
+namespace FsApi.Todo
 
 open System.Threading.Tasks
-open FsApi.Domain
+open FsApi.Todo.Domain
 
 type ITodoRepository =
     { GetAll: unit -> Task<Todo list>

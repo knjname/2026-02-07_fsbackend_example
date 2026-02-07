@@ -1,4 +1,4 @@
-namespace FsApi.Infra.Migrations
+namespace FsApi.Todo.Infra.Migrations
 
 open FluentMigrator
 

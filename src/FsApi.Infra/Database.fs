@@ -1,21 +1,20 @@
 namespace FsApi.Infra
 
+open System.Reflection
 open Microsoft.Extensions.DependencyInjection
 open FluentMigrator.Runner
 
 module Database =
 
-    let migrate (connectionString: string) =
+    let migrate (connectionString: string) (migrationAssemblies: Assembly list) =
         let serviceProvider =
             ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(fun rb ->
-                    rb
-                        .AddPostgres()
-                        .WithGlobalConnectionString(connectionString)
-                        .ScanIn(typeof<Migrations.CreateTodosTable>.Assembly)
-                        .For.Migrations()
-                    |> ignore)
+                    rb.AddPostgres().WithGlobalConnectionString(connectionString) |> ignore
+
+                    for assembly in migrationAssemblies do
+                        rb.ScanIn(assembly).For.Migrations() |> ignore)
                 .AddLogging(fun lb -> lb.AddFluentMigratorConsole() |> ignore)
                 .BuildServiceProvider(false)
 

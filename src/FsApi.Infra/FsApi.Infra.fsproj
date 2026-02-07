@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -6,21 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations/M20250101_CreateTodosTable.fs" />
     <Compile Include="Database.fs" />
-    <Compile Include="TodoRepository.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FsApi.Domain\FsApi.Domain.fsproj" />
-    <ProjectReference Include="..\FsApi.UseCase\FsApi.UseCase.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentMigrator" Version="8.0.*" />
     <PackageReference Include="FluentMigrator.Runner" Version="8.0.*" />
     <PackageReference Include="FluentMigrator.Runner.Postgres" Version="8.0.*" />
-    <PackageReference Include="Npgsql.FSharp" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FsApi.Domain\FsApi.Domain.fsproj" />
-    <ProjectReference Include="..\FsApi.UseCase\FsApi.UseCase.fsproj" />
+    <ProjectReference Include="..\FsApi.SharedKernel\FsApi.SharedKernel.fsproj" />
+    <ProjectReference Include="..\FsApi.Todo\FsApi.Todo.fsproj" />
     <ProjectReference Include="..\FsApi.Infra\FsApi.Infra.fsproj" />
   </ItemGroup>
 

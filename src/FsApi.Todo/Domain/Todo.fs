@@ -1,6 +1,7 @@
-namespace FsApi.Domain
+namespace FsApi.Todo.Domain
 
 open System
+open FsApi.SharedKernel
 
 type Todo =
     { Id: int
@@ -8,10 +9,6 @@ type Todo =
       IsCompleted: bool
       CreatedAt: DateTimeOffset
       UpdatedAt: DateTimeOffset }
-
-type DomainError =
-    | NotFound of int
-    | ValidationError of string
 
 module Todo =
 

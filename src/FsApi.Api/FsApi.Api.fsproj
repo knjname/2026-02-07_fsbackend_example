@@ -5,14 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Dto.fs" />
-    <Compile Include="Handlers.fs" />
+    <Compile Include="Todo/Dto.fs" />
+    <Compile Include="Todo/Handlers.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FsApi.Domain\FsApi.Domain.fsproj" />
-    <ProjectReference Include="..\FsApi.UseCase\FsApi.UseCase.fsproj" />
+    <ProjectReference Include="..\FsApi.SharedKernel\FsApi.SharedKernel.fsproj" />
+    <ProjectReference Include="..\FsApi.Todo\FsApi.Todo.fsproj" />
     <ProjectReference Include="..\FsApi.Infra\FsApi.Infra.fsproj" />
   </ItemGroup>
 

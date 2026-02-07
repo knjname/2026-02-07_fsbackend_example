@@ -1,7 +1,7 @@
-namespace FsApi.Api
+namespace FsApi.Api.Todo
 
 open System
-open FsApi.Domain
+open FsApi.Todo.Domain
 
 [<CLIMutable>]
 type CreateTodoRequest = { Title: string }

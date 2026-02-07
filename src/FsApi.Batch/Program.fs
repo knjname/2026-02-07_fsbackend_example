@@ -1,7 +1,7 @@
 open System.IO
 open Microsoft.Extensions.Configuration
 open FsApi.Infra
-open FsApi.UseCase
+open FsApi.Todo
 
 let getConnectionString () =
     let config =
@@ -41,8 +41,10 @@ let runCompleteAll (repo: ITodoRepository) =
 [<EntryPoint>]
 let main args =
     let connectionString = getConnectionString ()
-    Database.migrate connectionString
-    let repo = TodoRepository.create connectionString
+
+    Database.migrate connectionString [ typeof<FsApi.Todo.Infra.Migrations.CreateTodosTable>.Assembly ]
+
+    let repo = FsApi.Todo.Infra.TodoRepository.create connectionString
 
     match args with
     | [| "list" |] -> (runList repo).GetAwaiter().GetResult()

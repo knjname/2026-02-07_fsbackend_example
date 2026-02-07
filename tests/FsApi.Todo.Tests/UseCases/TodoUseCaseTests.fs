@@ -1,10 +1,11 @@
-module FsApi.UseCase.Tests.TodoUseCaseTests
+module FsApi.Todo.Tests.TodoUseCaseTests
 
 open System
 open System.Threading.Tasks
 open Expecto
-open FsApi.Domain
-open FsApi.UseCase
+open FsApi.SharedKernel
+open FsApi.Todo.Domain
+open FsApi.Todo
 
 let sampleTodo =
     { Id = 1

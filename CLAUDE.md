@@ -16,11 +16,10 @@ dotnet build FsApi.sln
 dotnet test FsApi.sln
 
 # 単一テストプロジェクト実行
-dotnet test tests/FsApi.Domain.Tests/FsApi.Domain.Tests.fsproj
-dotnet test tests/FsApi.UseCase.Tests/FsApi.UseCase.Tests.fsproj
+dotnet test tests/FsApi.Todo.Tests/FsApi.Todo.Tests.fsproj
 
 # 特定テスト実行 (Expectoのフィルター)
-dotnet test tests/FsApi.Domain.Tests/FsApi.Domain.Tests.fsproj -- --filter "テスト名"
+dotnet test tests/FsApi.Todo.Tests/FsApi.Todo.Tests.fsproj -- --filter "テスト名"
 
 # PostgreSQL起動 (API実行前に必要)
 docker compose -f devenv/compose.yml up
@@ -35,30 +34,30 @@ dotnet run --project src/FsApi.Batch/FsApi.Batch.fsproj -- complete-all
 
 ## アーキテクチャ
 
-クリーンアーキテクチャ（ヘキサゴナルアーキテクチャ）を採用。依存方向は外側→内側。
+業務領域コロケーション（ドメイン単位のパッケージ構造）を採用。Todoドメインに関連するコード（型定義、ユースケース、ポート、リポジトリ実装）を `FsApi.Todo` プロジェクトにまとめている。
 
 ```
-FsApi.Api / FsApi.Batch  (プレゼンテーション層)
-    ↓
-FsApi.UseCase             (アプリケーション層 - ビジネスロジック)
-    ↓
-FsApi.Domain              (ドメイン層 - エンティティ・バリデーション)
+FsApi.SharedKernel          (共有カーネル - DomainError等の共通型)
     ↑
-FsApi.Infra               (インフラ層 - DB実装) ※UseCase層のPortを実装
+FsApi.Todo                  (Todoドメイン - 型・ポート・ユースケース・インフラ実装)
+    ↑
+FsApi.Infra                 (共有インフラ - DBマイグレーション実行のみ)
+    ↑
+FsApi.Api / FsApi.Batch     (プレゼンテーション層 - HTTP / CLI)
 ```
 
-### 各層の役割
+### 各プロジェクトの役割
 
-- **FsApi.Domain**: `Todo`レコード型、`DomainError`判別共用体（NotFound / ValidationError）、バリデーション関数
-- **FsApi.UseCase**: `ITodoRepository`ポート定義（Ports.fs）、CRUD用ユースケース関数（TodoUseCases.fs）。すべて`Result<'T, DomainError>`で関数的エラーハンドリング
-- **FsApi.Infra**: PostgreSQLへのリポジトリ実装（Npgsql.FSharp使用）、DBマイグレーション（Database.fs）
+- **FsApi.SharedKernel**: `DomainError`判別共用体（NotFound / ValidationError）など、ドメイン横断の共通型
+- **FsApi.Todo**: Todoドメインのすべて。`Todo`レコード型・バリデーション（Domain/Todo.fs）、`ITodoRepository`ポート定義（Ports.fs）、CRUD用ユースケース関数（UseCases.fs）、FluentMigratorマイグレーション（Infra/Migrations/）、PostgreSQLリポジトリ実装（Infra/TodoRepository.fs）
+- **FsApi.Infra**: FluentMigrator.Runnerを使ったDBマイグレーション実行（Database.fs）。ドメインへの依存なし
 - **FsApi.Api**: OxpeckerによるHTTPハンドラー、DTO定義、OpenAPI/Scalar UI対応
 - **FsApi.Batch**: CLIバッチ処理（list / complete-all コマンド）
 
 ### 設計パターン
 
 - DIコンテナ不使用。関数パラメータで依存性を渡す関数型スタイル
-- ポート/アダプタパターン: `ITodoRepository`がポート、Infra層が実装
+- ポート/アダプタパターン: `ITodoRepository`がポート、`FsApi.Todo.Infra`が実装
 - 非同期I/Oは`Task`ベース
 - テストフレームワークはExpecto
 

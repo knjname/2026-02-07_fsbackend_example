@@ -1,9 +1,9 @@
-namespace FsApi.Infra
+namespace FsApi.Todo.Infra
 
 open System
 open Npgsql.FSharp
-open FsApi.Domain
-open FsApi.UseCase
+open FsApi.Todo.Domain
+open FsApi.Todo
 
 module TodoRepository =
 

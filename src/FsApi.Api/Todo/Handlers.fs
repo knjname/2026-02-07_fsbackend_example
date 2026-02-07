@@ -1,9 +1,10 @@
-namespace FsApi.Api
+namespace FsApi.Api.Todo
 
 open Microsoft.AspNetCore.Http
 open Oxpecker
-open FsApi.Domain
-open FsApi.UseCase
+open FsApi.SharedKernel
+open FsApi.Todo
+open FsApi.Todo.Domain
 
 module Handlers =
 

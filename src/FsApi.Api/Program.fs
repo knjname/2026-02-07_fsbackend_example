@@ -5,8 +5,8 @@ open Oxpecker
 open Oxpecker.OpenApi
 open Scalar.AspNetCore
 open FsApi.Infra
-open FsApi.Api
-open FsApi.Api.Handlers
+open FsApi.Api.Todo
+open FsApi.Api.Todo.Handlers
 
 let endpoints repo =
     [ GET
@@ -31,9 +31,9 @@ let main args =
 
     let connectionString = app.Configuration.GetConnectionString("DefaultConnection")
 
-    Database.migrate connectionString
+    Database.migrate connectionString [ typeof<FsApi.Todo.Infra.Migrations.CreateTodosTable>.Assembly ]
 
-    let repo = TodoRepository.create connectionString
+    let repo = FsApi.Todo.Infra.TodoRepository.create connectionString
 
     app.UseRouting() |> ignore
     app.MapOpenApi() |> ignore

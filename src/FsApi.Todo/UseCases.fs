@@ -1,7 +1,8 @@
-namespace FsApi.UseCase
+namespace FsApi.Todo
 
 open System.Threading.Tasks
-open FsApi.Domain
+open FsApi.SharedKernel
+open FsApi.Todo.Domain
 
 module TodoUseCases =
 
