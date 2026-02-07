@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentMigrator.Runner" Version="8.0.*" />
+    <PackageReference Include="FluentMigrator.Runner.Core" Version="8.0.*" />
     <PackageReference Include="FluentMigrator.Runner.Postgres" Version="8.0.*" />
   </ItemGroup>
 
