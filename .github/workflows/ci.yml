@@ -50,3 +50,11 @@ jobs:
 
       - name: Verify migration
         run: dotnet run --project src/FsApi.Batch/FsApi.Batch.fsproj -- list
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker build
+        run: docker compose build
