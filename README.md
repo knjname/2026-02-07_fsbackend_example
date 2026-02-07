@@ -122,6 +122,22 @@ dotnet watch --project src/FsApi.Api
 # http://localhost:5000/scalar/v1 で閲覧可能
 ```
 
+### テスト
+
+```bash
+# テスト全実行
+dotnet test FsApi.sln
+
+# 特定プロジェクトのテスト実行
+dotnet test tests/FsApi.Todo.Tests/FsApi.Todo.Tests.fsproj
+
+# テスト名でフィルタ（Expecto のフィルター）
+dotnet test tests/FsApi.Todo.Tests/FsApi.Todo.Tests.fsproj -- --filter "empty string"
+
+# ファイル保存時にテスト自動再実行（REPL 的な即時フィードバック）
+dotnet watch test --project tests/FsApi.Todo.Tests/FsApi.Todo.Tests.fsproj
+```
+
 ### バッチ CLI
 
 ```bash
