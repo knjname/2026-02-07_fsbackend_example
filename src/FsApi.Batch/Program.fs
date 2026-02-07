@@ -8,6 +8,7 @@ let getConnectionString () =
         ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional = true)
+            .AddEnvironmentVariables()
             .Build()
 
     let cs = config.GetConnectionString("DefaultConnection")
