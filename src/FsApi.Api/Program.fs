@@ -9,42 +9,27 @@ open FsApi.Api
 open FsApi.Api.Handlers
 
 let endpoints repo =
-    [
-        GET [
-            route "/todos" (listTodos repo)
-            |> addOpenApiSimple<unit, TodoResponse list>
+    [ GET
+          [ route "/todos" (listTodos repo) |> addOpenApiSimple<unit, TodoResponse list>
 
-            routef "/todos/{%i}" (getTodo repo)
-            |> addOpenApiSimple<int, TodoResponse>
-        ]
-        POST [
-            route "/todos" (createTodo repo)
-            |> addOpenApiSimple<CreateTodoRequest, TodoResponse>
-        ]
-        PUT [
-            routef "/todos/{%i}" (updateTodo repo)
-            |> addOpenApiSimple<UpdateTodoRequest, TodoResponse>
-        ]
-        DELETE [
-            routef "/todos/{%i}" (deleteTodo repo)
-            |> addOpenApiSimple<int, unit>
-        ]
-    ]
+            routef "/todos/{%i}" (getTodo repo) |> addOpenApiSimple<int, TodoResponse> ]
+      POST
+          [ route "/todos" (createTodo repo)
+            |> addOpenApiSimple<CreateTodoRequest, TodoResponse> ]
+      PUT
+          [ routef "/todos/{%i}" (updateTodo repo)
+            |> addOpenApiSimple<UpdateTodoRequest, TodoResponse> ]
+      DELETE [ routef "/todos/{%i}" (deleteTodo repo) |> addOpenApiSimple<int, unit> ] ]
 
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
 
-    builder.Services
-        .AddRouting()
-        .AddOxpecker()
-        .AddOpenApi()
-    |> ignore
+    builder.Services.AddRouting().AddOxpecker().AddOpenApi() |> ignore
 
     let app = builder.Build()
 
-    let connectionString =
-        app.Configuration.GetConnectionString("DefaultConnection")
+    let connectionString = app.Configuration.GetConnectionString("DefaultConnection")
 
     Database.migrate connectionString
 

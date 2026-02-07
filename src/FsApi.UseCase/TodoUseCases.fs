@@ -14,6 +14,7 @@ module TodoUseCases =
     let getById (repo: ITodoRepository) (id: int) : Task<Result<Todo, DomainError>> =
         task {
             let! todo = repo.GetById id
+
             match todo with
             | Some t -> return Ok t
             | None -> return Error(NotFound id)
@@ -41,11 +42,13 @@ module TodoUseCases =
                 | Error e -> return Error e
                 | Ok validTitle ->
                     let! result = repo.Update id (Some validTitle) isCompleted
+
                     match result with
                     | Some todo -> return Ok todo
                     | None -> return Error(NotFound id)
             | None ->
                 let! result = repo.Update id None isCompleted
+
                 match result with
                 | Some todo -> return Ok todo
                 | None -> return Error(NotFound id)
@@ -54,10 +57,7 @@ module TodoUseCases =
     let delete (repo: ITodoRepository) (id: int) : Task<Result<unit, DomainError>> =
         task {
             let! deleted = repo.Delete id
-            if deleted then
-                return Ok()
-            else
-                return Error(NotFound id)
+            if deleted then return Ok() else return Error(NotFound id)
         }
 
     let completeAll (repo: ITodoRepository) () : Task<int> =
@@ -65,8 +65,10 @@ module TodoUseCases =
             let! todos = repo.GetAll()
             let incomplete = todos |> List.filter (fun t -> not t.IsCompleted)
             let mutable count = 0
+
             for todo in incomplete do
                 let! _ = repo.Update todo.Id None (Some true)
                 count <- count + 1
+
             return count
         }

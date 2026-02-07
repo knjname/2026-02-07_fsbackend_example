@@ -7,23 +7,22 @@ open FsApi.UseCase
 
 module TodoRepository =
 
-    let private mapRow (read: RowReader) : Todo = {
-        Id = read.int "id"
-        Title = read.string "title"
-        IsCompleted = read.bool "is_completed"
-        CreatedAt = read.datetimeOffset "created_at"
-        UpdatedAt = read.datetimeOffset "updated_at"
-    }
+    let private mapRow (read: RowReader) : Todo =
+        { Id = read.int "id"
+          Title = read.string "title"
+          IsCompleted = read.bool "is_completed"
+          CreatedAt = read.datetimeOffset "created_at"
+          UpdatedAt = read.datetimeOffset "updated_at" }
 
-    let create (connectionString: string) : ITodoRepository = {
-        GetAll =
+    let create (connectionString: string) : ITodoRepository =
+        { GetAll =
             fun () ->
                 connectionString
                 |> Sql.connect
                 |> Sql.query "SELECT id, title, is_completed, created_at, updated_at FROM todos ORDER BY id"
                 |> Sql.executeAsync mapRow
 
-        GetById =
+          GetById =
             fun id ->
                 task {
                     let! rows =
@@ -36,7 +35,7 @@ module TodoRepository =
                     return rows |> List.tryHead
                 }
 
-        Create =
+          Create =
             fun title ->
                 task {
                     let! rows =
@@ -50,7 +49,7 @@ module TodoRepository =
                     return rows |> List.head
                 }
 
-        Update =
+          Update =
             fun id title isCompleted ->
                 task {
                     let setClauses = ResizeArray<string>()
@@ -97,7 +96,7 @@ module TodoRepository =
                         return rows |> List.tryHead
                 }
 
-        Delete =
+          Delete =
             fun id ->
                 task {
                     let! affected =
@@ -108,5 +107,4 @@ module TodoRepository =
                         |> Sql.executeNonQueryAsync
 
                     return affected > 0
-                }
-    }
+                } }

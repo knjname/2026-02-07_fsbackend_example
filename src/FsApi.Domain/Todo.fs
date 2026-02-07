@@ -2,13 +2,12 @@ namespace FsApi.Domain
 
 open System
 
-type Todo = {
-    Id: int
-    Title: string
-    IsCompleted: bool
-    CreatedAt: DateTimeOffset
-    UpdatedAt: DateTimeOffset
-}
+type Todo =
+    { Id: int
+      Title: string
+      IsCompleted: bool
+      CreatedAt: DateTimeOffset
+      UpdatedAt: DateTimeOffset }
 
 type DomainError =
     | NotFound of int
