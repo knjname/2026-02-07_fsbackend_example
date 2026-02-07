@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Migrations/M20250101_CreateTodosTable.fs" />
     <Compile Include="Database.fs" />
     <Compile Include="TodoRepository.fs" />
   </ItemGroup>
@@ -16,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentMigrator" Version="8.0.*" />
+    <PackageReference Include="FluentMigrator.Runner" Version="8.0.*" />
+    <PackageReference Include="FluentMigrator.Runner.Postgres" Version="8.0.*" />
     <PackageReference Include="Npgsql.FSharp" Version="8.0.0" />
   </ItemGroup>
 

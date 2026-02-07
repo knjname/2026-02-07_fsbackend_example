@@ -47,3 +47,6 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build
+
+      - name: Verify migration
+        run: dotnet run --project src/FsApi.Batch/FsApi.Batch.fsproj -- list
